@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="192x192" href="/JS/images/JS.png">
+    <title>Poisson Probabilies Table</title>
+
+  <style>
+    body { max-width: 440px; }
+    #sample { overflow-x: auto; }
+    table { border-collapse: collapse; }
+    th { color: navy; padding: 5px 5px; }
+    td { 
+        border: 1px solid rgb(103, 103, 216); 
+        padding: 5px 5px; 
+        text-align: center; 
+        position: relative;
+    }
+    td:hover .tip {
+        visibility: visible;
+    }
+    td .tip {
+        visibility: hidden;
+        font-size: small;
+        background-color: blue;
+        color: white;
+        text-align: center;
+        padding: 5px 5px;
+        position: absolute;
+        left: 5px; 
+        top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<center>
+<h2 id=title></h2>
+
+<table id="tablo"></table>
+
+<p id=out style="font-size:small"></p>
+</center>
+
+<hr />
+<b>Sample code</b>
+
+<pre id=sample></pre>
+<pre id=sample1></pre>
+<pre id=sample2></pre>
+<hr />
+
+<script>
+"use strict";
+//June 8, 2018 MAE -- basis for 
+//https://maeyler.github.io/Visual-Mujam/
+//
+function makeRows(m, n) {
+    let L = [0.5, 1, 1.5, 2, 2.5, 3];
+
+    let row = "<th></th>";
+    for (let λ of L) {
+    row += "<th>"+"λ= "+λ+"</th>";
+    }
+      
+    let text = "<tr>"+row+"</tr>";
+    for (let x = 0; x <= m; x++) {
+       row = "<th>"+"x= "+ x+"</th>";
+       for (let j = 0; j < n; j++) {
+         let poissonVal = formula(L[j], x);
+         row += "<td>" + poissonVal.toFixed(4) + "</td>";
+       }
+       text += "<tr>"+row+"</tr>";
+    }
+
+    tablo.innerHTML = text; 
+}
+
+function formula(λ,x){
+return Math.exp(-λ)*((Math.pow(λ,x))/(factorial(x)));
+}
+
+function factorial(n) {
+	return n == 0 ? 1 :  n * factorial(n - 1);
+}
+
+function tableFromMenu() {
+    let [m, n] = size.value.split("x");
+    makeRows(m, n); //a[0], a[1]
+    rows.value = m;
+    cols.value = n;
+}
+
+function tableFromInput() {
+    let m = rows.value;
+    let n = cols.value;
+    makeRows(m, n);
+    size.value = m+"x"+n;
+}
+    title.innerText = document.title;
+    sample.innerText = makeRows.toString();
+    sample1.innerText = formula.toString();
+    sample2.innerText = factorial.toString();
+    makeRows(8, 6);
+</script>
+
+</body>
+</html> 

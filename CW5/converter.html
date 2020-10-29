@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+  <title>Converter inch to cm</title>
+
+  <style>
+    /* CSS comment */
+    body {
+      max-width: 440px;
+    }
+
+    #inp {
+      width: 50px
+    }
+
+    #out {
+      font-size: 18px;
+      background: blue;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HTML comment: Modify all items marked xxx -->
+
+  <!--<h2 id=title>This text is not shown. Why?</h2>-->
+  inch
+  <input type=number name="inch" id=inch value=0 onChange="inchtocm()">
+  &emsp;
+  cm
+  <input type=number name="cm" id=cm value=0 onChange="cmtoinch()">
+  <hr />
+  <b>Sample Code</b>
+  <pre id=sample></pre>
+  <pre>
+    function inchtocm() {
+      let i = new Converter(Number(cm.value));
+      i.inch=Number(inch.value);
+      cm.value =i.cm ;
+    }
+
+    function cmtoinch() {
+      let i = new Converter(Number(cm.value));
+      inch.value=i.inch;
+      
+    }
+  </pre>
+
+  <script>
+    "use strict";
+    // JavaScript comment
+    function increment() {
+      let c = Number(out.innerText) + 1
+      console.log("counter = " + c);
+      out.innerText = c;
+    }
+
+
+    class Converter {
+      constructor(inch = 0) {
+        this.inch = inch;
+      }
+
+      get cm() {
+        return (this.inch * 2.54).toFixed(1);
+      }
+
+      set cm(value) {
+        this.inch = (value / 2.54).toFixed(1);
+      }
+      toString() {
+        return this.inch + "inch"
+      }
+
+      static fromCm(value) {
+        let t = new Converter();
+        t.cm = value;
+        return t;
+      }
+
+    }
+
+    function inchtocm() {
+      let i = new Converter(Number(cm.value));
+      i.inch=Number(inch.value);
+      cm.value =i.cm ;
+    }
+
+    function cmtoinch() {
+      let i = new Converter(Number(cm.value));
+      inch.value=i.inch;
+      
+    }
+
+
+    //global variable id is the HTML element with id 
+    //const title = document.getElementById("title");
+    //title.innerText = document.title;
+    //sample.innerText = increment.toString();
+    //out.innerText = 0; increment();
+    sample.innerText = Converter.toString();
+
+  </script>
+
+</body>
+
+</html>
