@@ -17,7 +17,7 @@
 <p>Remote file <br>
   <input type=text id=remote size=35 value="../images/objects.png">
 </p>
-<p><input type=file id=local multiple onChange='fileSelect()' /></p>  
+<p><input type=file id=local multiple onChange="fileSelect()"/></p>  
 <pre id=out></pre>
 <hr />
 <b>Sample code</b>
@@ -26,20 +26,19 @@
 <script>
 "use strict";
 function fileSelect() {
-    fetch(remote.value).then(r => r.blob())
-    .then(checkFiles) //called with Blob b
+    fetch(remote.value).then(r => r.blob()).then(checkFiles) //called with Blob b
 }
 function checkFiles(b) {
     let a = [...local.files]
-    let counter = 0;
-    //Implement this
-    for(let i in a){
-        if(i.length == b.length && i.docName == b.docName){
-            counter++;
+    out.innerText = a.map(t => t.name + ' ' + t.type).join('\n')
+    let outline ='\nall files are different'
+    for(let t of a){
+        if(t.size == b.size && t.type == b.type){
+            outline = "\n" + t.name + ' is the same';
+            break
         }
     }
-
-    out.innerText += a.length - counter + " different files and " + counter + " same files."
+    out.innerText += '\n' + a.length + ' items checked.' + outline
 }
 const L = console.log
 docName.innerText = document.title
