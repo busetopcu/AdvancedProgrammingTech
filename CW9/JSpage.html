@@ -1,0 +1,73 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" href="">
+
+<script>
+  "use strict";
+  function elt(type, ...list) {
+    let e = document.createElement(type)
+    for (let c of list) {
+      e.appendChild(c instanceof Element ? c
+        : document.createTextNode(c))
+    }
+    return e
+  }
+  const BOOK_REF =
+    "https://www.w3schools.com/js/",
+    TITLE = "Counter",
+    TEXT = "Initial";
+
+  function makePage() {
+    //<p>— <b>AUTH</b>DESC<i>BOOK</i>YEAR</p>
+
+    let span = elt("span", TEXT)
+    span.style.color = "blue"
+    let bold = elt("b", "Sample code")
+    let pre = elt("pre", makePage)
+    let link = elt("a", "JS Tutorial")
+    let textField = elt("input")
+    textField.id = "inp"
+    textField.type = "number"
+    textField.value = 0
+    //textField.onchange= 
+    let button = elt("button", "+")
+    //button.onclick=increment()
+    let out = elt("span")
+    out.id = "out"
+    link.href = BOOK_REF
+    document.title = TITLE
+    document.body = elt("body",
+      elt("h2", TITLE),
+      elt("p", TEXT, "  ", textField, "\t", button),
+      elt("p", "Out: ", out),
+      elt("hr"),
+      elt("div", bold, pre),
+      elt("div", "Ref: ", link),
+      elt("hr")
+    )
+    document.body.style.maxWidth = "420px"
+  }
+
+
+  const tree = [], SPACE = '&emsp;', MAX = 26;
+  function toTree(e, space) {
+    let c = e.firstChild
+    if (!c || c instanceof Element) c = ''
+    else c = SPACE + c.textContent
+    if (c.length > MAX + 3) c = c.substring(0, MAX) + '…'
+    console.log(space.length, e.localName, c)
+    tree.push(space + '+ ' + e.tagName + c)
+    for (let c of e.children)
+      toTree(c, space + SPACE)
+  }
+
+  function increment() {
+    document.getElementById("input").innerText = (document.getElementById("out").innerText) +1
+    }
+
+  makePage(); toTree(document.body, '');
+  let t = elt("p"); t.style.color = "green";
+  t.innerHTML = tree.join('<br>');
+  document.body.append(t);
+</script>
+<!-- The document body is made by the script above -->
