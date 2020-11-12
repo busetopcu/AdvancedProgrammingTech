@@ -18,7 +18,6 @@
     TEXT = "Initial";
 
   function makePage() {
-    //<p>— <b>AUTH</b>DESC<i>BOOK</i>YEAR</p>
 
     let span = elt("span", TEXT)
     span.style.color = "blue"
@@ -29,9 +28,9 @@
     textField.id = "inp"
     textField.type = "number"
     textField.value = 0
-    //textField.onchange= 
+    textField.onchange= ConstNumber
     let button = elt("button", "+")
-    //button.onclick=increment()
+    button.onclick = increment
     let out = elt("span")
     out.id = "out"
     link.href = BOOK_REF
@@ -62,8 +61,12 @@
   }
 
   function increment() {
-    document.getElementById("input").innerText = (document.getElementById("out").innerText) +1
-    }
+    document.getElementById("out").innerText = Number(document.getElementById("out").innerText) + 1
+  }
+
+  function ConstNumber() {
+    document.getElementById("out").innerText = Number(document.getElementById("inp").value)
+  }
 
   makePage(); toTree(document.body, '');
   let t = elt("p"); t.style.color = "green";
