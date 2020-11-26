@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="">
+  <title>Battery Status</title>
+
+  <style>
+    /* CSS comment */
+    body {
+      max-width: 440px;
+    }
+
+    #url {
+      width: 190px;
+    }
+
+    span,
+    #url {
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HTML comment: Modify all items marked xxx -->
+
+  <h2 id=title title="Modify xxx"></h2>
+
+  <p title="Battery level">
+    Battery level: <span id=level>??</span>
+  </p>
+
+  <p title="Charge">
+    Charge Status: <span id=charge>??</span>
+  </p>
+
+  <p title="Remain">
+    Remaining: <span id=remain>??</span>
+  </p>
+
+  <h2>Online Status</h2>
+
+  <p title="Connect">
+    Connected: <span id=connect>??</span>
+  </p>
+
+  <h2>Keyboard</h2>
+
+  <p title="Keyboard">
+    <span id=keyboard>??</span>
+  </p>
+
+  <hr />
+  <b>Sample code</b>
+  <pre id=sample>This text is not shown. Why?</pre>
+
+  <hr />
+
+  <script>
+    "use strict";
+    // JavaScript comment
+
+    function init() {
+      navigator.getBattery().then(b => {
+        level.innerText = 100 * b.level + '%'
+        remain.innerText = b.chargingTime
+
+      })
+
+      navigator.getBattery().then(b => {
+
+        if (b.charging == true)
+          charge.innerText = "Charging..."
+        else
+          charge.innerText = "Discharging..."
+
+      })
+
+      if (window.onoffline === false) {
+        connect.innerText = 'online'
+      } else {
+        connect.innerText = 'offline'
+      }
+
+
+      window.addEventListener("onkeydown", event => {
+        if (event.key == "k") {
+          keyboard.innerText =event.key;
+        }
+      });
+
+    }
+
+    title.innerText = document.title;
+    sample.innerText = init;
+    init();
+  </script>
+
+</body>
+
+</html>
