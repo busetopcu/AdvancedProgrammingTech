@@ -6,7 +6,7 @@
     "theme-color": "gray",
     "icons": [
         {
-            "src": "JS_logo.png",
+            "src": "avatar.png",
             "sizes": "192x192",
             "type": "image/png"
         }
