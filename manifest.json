@@ -1,6 +1,6 @@
 {
     "name": "AdvancedProgrammingTech",
-    "start_url": "README.html",
+    "start_url": "index.html",
     "display": "standalone",
     "background_color": "gray",
     "theme-color": "gray",
