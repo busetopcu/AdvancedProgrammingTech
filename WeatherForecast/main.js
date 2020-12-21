@@ -1,5 +1,7 @@
 "use strict";
 
+var MAP
+
 function toHM(t, round) {
     let d = t ? new Date(t * 1000) : new Date()
     if (round && d.getSeconds() > 29)
@@ -31,21 +33,28 @@ async function askLocation() {
 }
 
 async function searchLocation(value) {
+
     let c = value;
     console.log(c);
     const U = "https://api.openweathermap.org/data/2.5/weather?"
     let url = U + "q=" + c + "&APPID=" + accessKey;
-    console.log(lat,lon)
-  
-        let data = await toJSON(url)
-        let w = data.weather[0];
-        let celsius = convert(data.main.temp).toFixed(0)
-        temp.innerText = celsius + '°c'
-        city.innerText = data.name + ', ' + data.sys.country
-        date.innerText = dateBuilder()
-        showIcon(w.icon), air.innerText = w.main
-    
-        lat = data.coord.lat; lon = data.coord.lon
+
+    let data = await toJSON(url)
+    let w = data.weather[0];
+ 
+    let celsius = convert(data.main.temp).toFixed(0)
+    temp.innerText = celsius + '°c'
+    city.innerText = data.name + ', ' + data.sys.country
+    date.innerText = dateBuilder()
+    showIcon(w.icon), air.innerText = w.main
+
+    lat = data.coord.lat; lon = data.coord.lon;
+    console.log(lat, lon)
+
+    MAP.setView([lat, lon], 10)
+    L.marker([lat, lon]).addTo(MAP).bindPopup(w.name)
+
+    document.getElementById("searchCity").value = "";
 }
 
 function getLocation2(p) { //Approximate
@@ -69,14 +78,41 @@ async function askWeather() {
     let data = await toJSON(url)
 
     let w = data.weather[0];
+
+    MAP.setView([lat, lon], 10)
+    L.marker([lat, lon]).addTo(MAP).bindPopup(w.name)
+
     let celsius = convert(data.main.temp).toFixed(0)
     temp.innerText = celsius + '°c'
     city.innerText = data.name + ', ' + data.sys.country
     date.innerText = dateBuilder()
     showIcon(w.icon), air.innerText = w.main
 
+    let h = w.main + "  " + celsius + "°", { sys } = data
+    let y = data.name + ', ' + sys.country
+    console.log(h, y); console.log(sys)
+
     lat = data.coord.lat; lon = data.coord.lon
 
+    document.getElementById("searchCity").value = data.name;
+}
+
+function init() {
+    let p = { lat: 49, lng: 51 }
+    console.log('init at', p)
+    //L is global object from leaflet
+    MAP = L.map('map').setView(p, 10)  //setZoom(10)
+    let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    let attribution = '&copy; OpenStreetMap contributors'
+    L.tileLayer(u, { attribution }).addTo(MAP)
+    //let report = () => out.innerText = MAP.getZoom()
+    //MAP.on('zoom', report); report()
+    MAP.on('click', e => {
+        console.log(e.latlng.lng)
+        lat = e.latlng.lat
+        lon = e.latlng.lng
+        askWeather()
+    })
 }
 
 function dateBuilder() {
@@ -129,4 +165,4 @@ function getAPIkey() {
 }
 
 err.style.display = "none"
-getAPIkey(); askLocation()
+getAPIkey(); askLocation(); init()

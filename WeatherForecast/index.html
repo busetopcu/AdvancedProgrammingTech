@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="">
-    <title>Open Weather</title>
+    <title>Weather Forecast</title>
     <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -14,6 +16,7 @@
     <div class="app-wrap">
         <header>
             <input type="text" 
+            id="searchCity"
             autocomplete="off" 
             class="search-box" 
             onChange="searchLocation(value)" 
@@ -34,6 +37,8 @@
                         <a href="https://openweathermap.org/appid" target="NewTab">here</a>
                     </p>
                 </div>
+                <br/>
+                <div id=map class="map"></div>
             </div>
         </main>
         <script src="main.js"></script>
