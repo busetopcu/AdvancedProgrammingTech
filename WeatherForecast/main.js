@@ -2,6 +2,7 @@
 
 var MAP
 
+
 function toHM(t, round) {
     let d = t ? new Date(t * 1000) : new Date()
     if (round && d.getSeconds() > 29)
@@ -41,12 +42,13 @@ async function searchLocation(value) {
 
     let data = await toJSON(url)
     let w = data.weather[0];
- 
+
     let celsius = convert(data.main.temp).toFixed(0)
     temp.innerText = celsius + '°c'
     city.innerText = data.name + ', ' + data.sys.country
     date.innerText = dateBuilder()
-    showIcon(w.icon), air.innerText = w.main
+    showIcon(w.icon)
+    air.innerText = w.main
 
     lat = data.coord.lat; lon = data.coord.lon;
     console.log(lat, lon)
@@ -55,23 +57,127 @@ async function searchLocation(value) {
     L.marker([lat, lon]).addTo(MAP).bindPopup(w.name)
 
     document.getElementById("searchCity").value = "";
+    err.style.display = "none"
+}
+
+async function searchForecast(value) {
+    let c = value;
+    console.log(c);
+    const U = "https://api.openweathermap.org/data/2.5/forecast?"
+    let url = U + "q=" + c + "&APPID=" + accessKey;
+    let data = await toJSON(url)
+
+    lat = data.city.coord.lat;
+    lon = data.city.coord.lon;
+    console.log("La,Lo: " + data.city.coord.lat, data.city.coord.lon)
+
+    searchLocation(c);
+
+    for (let i = 0; i < 10; i ++) {
+        if (i == 4) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp1.innerText = w.main
+            air1.innerHTML = convert(s.main.temp).toFixed(0) + '°'
+            icon1.innerHTML = showIcon2(w.icon)
+            date1.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 12) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp2.innerText = w.main
+            air2.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon2.innerHTML = showIcon2(w.icon)
+            date2.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 20) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp3.innerText = w.main
+            air3.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon3.innerHTML = showIcon2(w.icon)
+            date3.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 28){
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp4.innerText = w.main
+            air4.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon4.innerHTML = showIcon2(w.icon)
+            date4.innerText = readDate(s.dt_txt)
+        }
+        i++;
+    }
+}
+
+async function askForecast() {
+    //lat =data.city.coord.lat;
+    //lon = data.city.coord.lon;
+    console.log("LAT,LON: "+ lat, lon);
+
+    const U = "https://api.openweathermap.org/data/2.5/forecast?"
+    let url = U + "lat=" + lat + "&lon=" + lon + "&APPID=" + accessKey;
+
+    let data = await toJSON(url)
+    lat = data.city.coord.lat; lon = data.city.coord.lon;
+    console.log("LAT,LON2: "+ lat, lon);
+
+    for (let i = 0; i < 39; i ++) {
+        if (i == 4) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp1.innerText = w.main
+            air1.innerHTML = convert(s.main.temp).toFixed(0) + '°'
+            icon1.innerHTML = showIcon2(w.icon)
+            date1.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 12) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp2.innerText = w.main
+            air2.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon2.innerHTML = showIcon2(w.icon)
+            date2.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 20) {
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp3.innerText = w.main
+            air3.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon3.innerHTML = showIcon2(w.icon)
+            date3.innerText = readDate(s.dt_txt)
+        }
+        else if (i == 28){
+            let s = data.list[i];
+            let w = data.list[i].weather[0];
+            temp4.innerText = w.main
+            air4.innerText = convert(s.main.temp).toFixed(0) + '°'
+            icon4.innerHTML = showIcon2(w.icon)
+            date4.innerText = readDate(s.dt_txt)
+        }
+        i++;
+    }
 }
 
 function getLocation2(p) { //Approximate
     console.log("ipinfo.io", p.city)
     let [x, y] = p.loc.split(',')
     lat = Number(x); lon = Number(y);
-    askWeather()
+    askWeather();
+    askForecast();
 }
 function getLocation1(p) { //Accurate
     console.log("getCurrentPosition")
     lat = p.coords.latitude; lon = p.coords.longitude;
-    askWeather()
+    askWeather();
+    askForecast();
 }
 // Weather
 var accessKey;
 async function askWeather() {
-    console.log(lat, lon);
+    lat = lat;
+    lon= lon;
+    console.log("Lat, Lon: " + lat, lon);
     const U = "https://api.openweathermap.org/data/2.5/weather?"
     let url = U + "lat=" + lat + "&lon=" + lon + "&APPID=" + accessKey;
 
@@ -96,7 +202,6 @@ async function askWeather() {
 
     document.getElementById("searchCity").value = data.name;
 }
-
 function init() {
     let p = { lat: 49, lng: 51 }
     console.log('init at', p)
@@ -108,10 +213,13 @@ function init() {
     //let report = () => out.innerText = MAP.getZoom()
     //MAP.on('zoom', report); report()
     MAP.on('click', e => {
-        console.log(e.latlng.lng)
-        lat = e.latlng.lat
-        lon = e.latlng.lng
-        askWeather()
+        console.log("E= "+e)
+        lat = e.city.coord.lat;
+        lon = e.city.coord.lon;
+        //document.getElementById("searchCity").value = e.name;
+        //lat = e.coord.lat;
+        //lon = e.coord.lon;
+        askForecast();
     })
 }
 
@@ -125,19 +233,36 @@ function dateBuilder() {
     let month = months[d.getMonth()];
     let year = d.getFullYear();
 
-    return dayStr + ", " + dayNum + " " + month + " " + year
+    return dayStr + ", " + dayNum + " " + month + " " + year;
+}
+
+function readDate(i) {
+    console.log(i)
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let [x, y] = i.split(' ')
+    let [a, b, c] = y.split(':')
+    let g = b + "" + c + "" + a
+    let n = g.replace('-', '/').replace('-', '/')
+    //let e = days[new Date().getDay()]
+    return a + ":" + b
 }
 
 function showIcon(i) {
     const URL = "https://openweathermap.org/img/w/"
     icon.src = URL + i + ".png"
     document.querySelector('link').href = icon.src
-
 }
+
+function showIcon2(i) {
+    const URL = "https://openweathermap.org/img/w/"
+    return "<img src=" + URL + i + ".png>"
+}
+
 function convert(kelvin) {
     return (kelvin - 273.15);
     //return celsius*1.8 + 32
 }
+
 // Interaction
 function askUser() {
     let k = prompt('Please enter openweather key:')
@@ -145,7 +270,7 @@ function askUser() {
     return k
 }
 function error(e) {
-    main.style.display = "none"; //hide
+    //main.style.display = "none"; //hide
     //refs.style.display = "none";
     err.style.display = ''; //show
     throw e
@@ -160,9 +285,9 @@ function getAPIkey() {
         }
         accessKey = keys.openweather
     } else { //cannot use localStorage
-        accessKey = askUser()
+        accessKey = "8bfa37e735e70105d70e1db7208ae848"
     }
 }
 
 err.style.display = "none"
-getAPIkey(); askLocation(); init()
+getAPIkey(); askLocation(); init(); 
