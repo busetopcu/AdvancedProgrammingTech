@@ -285,7 +285,7 @@ function getAPIkey() {
         }
         accessKey = keys.openweather
     } else { //cannot use localStorage
-        accessKey = "8bfa37e735e70105d70e1db7208ae848"
+        accessKey = askUser();
     }
 }
 
