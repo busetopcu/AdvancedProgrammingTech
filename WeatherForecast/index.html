@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="icon" href="">
+    <link rel="icon" href="https://busetopcu.github.io/AdvancedProgrammingTech/avatar.png">
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="main.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
@@ -26,51 +26,47 @@
             <div class="current">
                 <div id="temp" class="temp"></div>
                 <p><img id=icon></p>
-                <span id="air" class="air"></span>
-
+                <span id="air" class="air"></span><br>
                 <div id="days" class="days">
                     <div id="day1" class="day1">
-                        <p>Day 1</p><br>
-                        <div id="date1" class="date1"></div>
+                        <p><span id="date1"></span></p>
+                        <div id="time1" class="time1"></div>
                         <p><span id=icon1></span></p>
                         <div id="temp1" class="temp1"></div><br>
                         <div id="air1" class="air1"></div>
-
                     </div>
                     <div id="day2" class="day2">
-                        <p>Day 2</p><br>
-                        <div id="date2" class="date2"></div>
+                        <p><span id=date2></span></p>
+                        <div id="time2" class="time2"></div>
                         <p><span id=icon2></span></p>
                         <div id="temp2" class="temp2"></div><br>
                         <div id="air2" class="air2"></div>
                     </div>
                     <div id="day3" class="day3">
-                        <p>Day 3</p><br>
-                        <div id="date3" class="date3"></div>
+                        <p><span id=date3></span></p>
+                        <div id="time3" class="time3"></div>
                         <p><span id=icon3></span></p>
                         <div id="temp3" class="temp3"></div><br>
                         <div id="air3" class="air3"></div>
                     </div>
                     <div id="day4" class="day4">
-                        <p>Day 4</p><br>
-                        <div id="date4" class="date4"></div>
+                        <p><span id=date4></span></p>
+                        <div id="time4" class="time4"></div>
                         <p><span id=icon4></span></p>
                         <div id="temp4" class="temp4"></div><br>
                         <div id="air4" class="air4"></div>
                     </div>
-                    <br />
                 </div>
-
             </div>
             <div>
-                <br />
                 <p id=err>Undefined location or you need an API key for openweathermap.org
                     <a href="https://openweathermap.org/appid" target="NewTab">here</a>
                 </p>
                 <br />
             </div>
-            <div id=map class="map"></div>
         </main>
+        <p id="owner">Buse TOPÇU, 2020</p>
+        <div id=map class="map"></div>
         <script src="main.js"></script>
     </div>
 </body>
