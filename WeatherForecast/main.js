@@ -222,6 +222,7 @@ function dateBuilder() {
     let d = new Date();
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let dayShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     let dayStr = days[d.getDay()];  //0-6
     let dayNum = d.getDate();
@@ -230,10 +231,10 @@ function dateBuilder() {
 
     date.innerText = dayStr + ", " + dayNum + " " + month + " " + year;
 
-    date1.innerText = (d.getDay() + 1 < 7) ? days[d.getDay() + 1] : days[(d.getDay() + 1) % 7];
-    date2.innerText = (d.getDay() + 2 < 7) ? days[d.getDay() + 2] : days[(d.getDay() + 2) % 7];
-    date3.innerText = (d.getDay() + 3 < 7) ? days[d.getDay() + 3] : days[(d.getDay() + 3) % 7];
-    date4.innerText = (d.getDay() + 4 < 7) ? days[d.getDay() + 4] : days[(d.getDay() + 4) % 7];
+    date1.innerText = (d.getDay() + 1 < 7) ? dayShort[d.getDay() + 1] : dayShort[(d.getDay() + 1) % 7];
+    date2.innerText = (d.getDay() + 2 < 7) ? dayShort[d.getDay() + 2] : dayShort[(d.getDay() + 2) % 7];
+    date3.innerText = (d.getDay() + 3 < 7) ? dayShort[d.getDay() + 3] : dayShort[(d.getDay() + 3) % 7];
+    date4.innerText = (d.getDay() + 4 < 7) ? dayShort[d.getDay() + 4] : dayShort[(d.getDay() + 4) % 7];
 }
 
 function readTime(i) {
