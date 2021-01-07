@@ -2,9 +2,6 @@
 
 <p>This repo includes classwork in the advanced programming course.
 <p>
-<ul>
-  <li><a href="https://github.com/busetopcu/AdvancedProgrammingTech">GitHub Repo</a></li>
-</ul>
 
 <h4>Class Work</h4>
 <ul>
